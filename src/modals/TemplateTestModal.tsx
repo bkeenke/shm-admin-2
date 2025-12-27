@@ -35,13 +35,14 @@ export default function TemplateTestModal({
         dry_run: dryRun ? '1' : '0',
         format: 'default',
       });
-
+      
       if (usi) {
         params.append('usi', usi);
       }
 
-      const response = await shm_request(`shm/v1/template/${templateId}?${params.toString()}`);
-      setRenderResult(response.data?.[0] || JSON.stringify(response.data, null, 2));
+      const response = await shm_request(`/shm/v1/template/${templateId}?${params.toString()}`);
+      const result = response.data?.[0] || JSON.stringify(response.data, null, 2);
+      setRenderResult(result);
       toast.success('Успех');
     } catch (error) {
       toast.error('Ошибка');

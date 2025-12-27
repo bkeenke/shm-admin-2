@@ -4,7 +4,8 @@ import { Plus, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Editor from '@monaco-editor/react';
 import JsonEditor from '../components/JsonEditor';
-import { registerTTCompletion } from '../lib/ttMonaco';
+import { registerTTCompletion, registerTTMethodHelp } from '../lib/ttMonaco';
+import { addClipboardActions } from '../lib/monacoClipboard';
 
 interface TemplateCreateModalProps {
   open: boolean;
@@ -153,13 +154,12 @@ export default function TemplateCreateModal({
             ))}
           </div>
         </div>
-
-        {}
+{}
         <div className="flex items-start gap-3">
           <label className="w-24 text-sm font-medium shrink-0 pt-2" style={labelStyles}>
             Данные
           </label>
-          <div className="flex-1 border rounded overflow-hidden" style={{ borderColor: inputStyles.borderColor }}>
+          <div className="flex-1 border rounded overflow-hidden tt-editor" style={{ borderColor: inputStyles.borderColor }}>
             <Editor
               height="400px"
               language={editorLanguage}
@@ -180,6 +180,8 @@ export default function TemplateCreateModal({
               onMount={(editor, monaco) => {
                 editorRef.current = editor;
                 registerTTCompletion(monaco);
+                registerTTMethodHelp(editor, monaco);
+                addClipboardActions(editor, monaco);
               }}
             />
           </div>
