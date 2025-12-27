@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+п»їimport React, { useState, useEffect, useRef } from 'react';
 import Modal from '../components/Modal';
 import { Save, X, Trash2, Play, Maximize2, Minimize2, FileText, Download } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -34,6 +34,7 @@ export default function TemplateModal({
   const [deleting, setDeleting] = useState(false);
   const [editorLanguage, setEditorLanguage] = useState('plaintext');
   const editorRef = useRef<any>(null);
+  const templateSearchRef = useRef<HTMLInputElement | null>(null);
   const { resolvedTheme } = useThemeStore();
   const [testModalOpen, setTestModalOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -212,7 +213,7 @@ export default function TemplateModal({
         setTabs(prev => prev.map(t => t.id === activeTabId ? { ...t, template: templateData } : t));
       })
       .catch(() => {
-        toast.error('Не удалось загрузить шаблон');
+        toast.error('пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ');
       })
       .finally(() => setLoading(false));
   }, [activeTabId, tabs]);
@@ -668,6 +669,23 @@ export default function TemplateModal({
   // Keyboard shortcut for saving (Ctrl+S)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key.toLowerCase() === 'f') {
+        const searchInput = templateSearchRef.current;
+        if (!searchInput) {
+          return;
+        }
+
+        const activeElement = document.activeElement as HTMLElement | null;
+        if (activeElement && activeElement.closest('.monaco-editor')) {
+          return;
+        }
+
+        event.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+        return;
+      }
+
       if (event.ctrlKey && event.key === 's') {
         event.preventDefault();
         
@@ -839,6 +857,7 @@ export default function TemplateModal({
               <TemplateSidebar
                 activeTemplateId={formData.id}
                 onTemplateSelect={handleTemplateSelect}
+                searchInputRef={templateSearchRef}
                 onNewTemplate={() => {
                   const newTab = {
                     id: 'new-' + Date.now(),
