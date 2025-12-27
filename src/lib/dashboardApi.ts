@@ -21,6 +21,9 @@ export interface DashboardAnalytics {
   };
 }
 
+const DASHBOARD_CACHE_TTL_MS = 30000;
+let dashboardCache: { key: string; data: DashboardAnalytics; timestamp: number } | null = null;
+
 export async function fetchDashboardAnalytics(period: number = 7): Promise<DashboardAnalytics> {
   try {
     // Вычисляем даты для периода
@@ -32,6 +35,14 @@ export async function fetchDashboardAnalytics(period: number = 7): Promise<Dashb
     const start = formatDate(startDate);
     const stop = formatDate(endDate);
     
+    const cacheKey = `${start}:${stop}`;
+    if (dashboardCache && dashboardCache.key === cacheKey) {
+      const age = Date.now() - dashboardCache.timestamp;
+      if (age < DASHBOARD_CACHE_TTL_MS) {
+        return dashboardCache.data;
+      }
+    }
+
     console.log(`[Dashboard] Fetching data for period: ${start} to ${stop}`);
     
     // Параллельные запросы к API - только данные за период
@@ -123,6 +134,7 @@ export async function fetchDashboardAnalytics(period: number = 7): Promise<Dashb
       },
     };
     
+    dashboardCache = { key: cacheKey, data: result, timestamp: Date.now() };
     console.log('[Dashboard] Analytics fetched successfully');
     return result;
     
