@@ -912,13 +912,10 @@ export default function TemplateModal({
                         AUTO
                       </button>
                     </div>
-                  <div className="text-xs mb-3" style={{ color: 'var(--theme-content-text-muted)' }}>
-                    Подсказка: полное описание метода - Ctrl+Shift+H
-                  </div>
-                  </div>
+</div>
 {}
                   <div className="flex-1 flex items-start gap-3 mb-3 min-h-0">
-                    <div className="flex-1 border rounded overflow-hidden h-full" style={{ borderColor: 'var(--theme-input-border)', backgroundColor: 'var(--theme-input-bg)' }}>
+                    <div className="flex-1 border rounded overflow-hidden h-full tt-editor" style={{ borderColor: 'var(--theme-input-border)', backgroundColor: 'var(--theme-input-bg)' }}>
                       <Editor
                         height="100%"
                         language={editorLanguage}
@@ -1039,16 +1036,13 @@ export default function TemplateModal({
                 AUTO
               </button>
             </div>
-          <div className="text-xs mb-2" style={{ color: 'var(--theme-content-text-muted)' }}>
-            Подсказка: полное описание метода - Ctrl+Shift+H
-          </div>
-          </div>
+</div>
 {}
           <div className="flex items-start gap-3">
             <label className="w-24 text-sm font-medium shrink-0 pt-2" style={labelStyles}>
               Р”Р°РЅРЅС‹Рµ
             </label>
-            <div className="flex-1 border rounded overflow-hidden" style={{ borderColor: inputStyles.borderColor }}>
+            <div className="flex-1 border rounded overflow-hidden tt-editor" style={{ borderColor: inputStyles.borderColor }}>
               <Editor
                 height="400px"
                 language={editorLanguage}
