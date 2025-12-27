@@ -519,6 +519,29 @@ body {
   background-color: var(--theme-content-text-muted);
 }
 
+.tt-editor .monaco-editor .suggest-widget {
+  overflow: visible;
+}
+
+.tt-editor .monaco-editor .suggest-widget .tt-suggest-panel {
+  position: absolute;
+  left: -1px;
+  right: auto;
+  top: 100%;
+  width: calc(100% + 2px);
+  box-sizing: border-box;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--theme-content-text);
+  background: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  opacity: 0.98;
+  pointer-events: none;
+}
+
 /* Toast overrides */
 .toaster-container {
   font-family: inherit !important;
